@@ -12,6 +12,20 @@ Perfected elites continue to spawn on the Moon.
 
 **Network compatibility:** In multiplayer, only the host needs the mod.
 
+## Limitations & known issues
+
+Other mods that alter elite tiers may occasionally break this mod, causing Perfected elites not to spawn after looping. I’m working on trying to fix incompatibilities.
+
+## Patch notes
+
+v1.1.0
+
+* Small rewrite to use R2API's `EliteAPI` instead of directly patching the combat director. This _should_ make the mod more compatible with others.
+
+v1.0.0
+
+* Initial version.
+
 ## Support
 
 If the mod fails to work, you can [open a GitHub issue][issue]. You can also contact me on Discord at Arimah#0001. I am _not_ in any Risk of Rain modding community.
