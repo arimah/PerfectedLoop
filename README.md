@@ -18,6 +18,12 @@ Other mods that alter elite tiers may occasionally break this mod, causing Perfe
 
 ## Patch notes
 
+v1.2.0 - *Survivors of the Void*
+
+* Depend on `RoR2.dll` instead of `Assembly-CSharp.dll`.
+* Remove unnecessary dependency on `UnityEngine.Networking.dll`, which seems to be gone.
+* Update dependency versions in manifest.
+
 v1.1.0
 
 * Small rewrite to use R2API's `EliteAPI` instead of directly patching the combat director. This _should_ make the mod more compatible with others.

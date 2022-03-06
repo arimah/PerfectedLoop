@@ -7,7 +7,7 @@ using RoR2;
 namespace Arimah
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.arimah.PerfectedLoop", "PerfectedLoop", "1.0.0")]
+    [BepInPlugin("com.arimah.PerfectedLoop", "PerfectedLoop", "1.2.0")]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
     [R2APISubmoduleDependency(nameof(EliteAPI))]
     public class PerfectedLoop : BaseUnityPlugin

@@ -10,8 +10,8 @@
       <HintPath>..\ror2libs\0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\ror2libs\Assembly-CSharp.dll</HintPath>
+    <Reference Include="RoR2">
+      <HintPath>..\ror2libs\RoR2.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="BepInEx">
@@ -60,10 +60,6 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\ror2libs\UnityEngine.CoreModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\ror2libs\UnityEngine.Networking.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
