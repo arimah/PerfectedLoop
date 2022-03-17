@@ -14,9 +14,12 @@ Perfected elites continue to spawn on the Moon.
 
 ## Limitations & known issues
 
-Other mods that alter elite tiers may occasionally break this mod, causing Perfected elites not to spawn after looping. I’m working on trying to fix incompatibilities.
+The mod looks for the elite tier that contains Malachite _and_ Celestine elites. If it can’t find it, it falls back to the vanilla game’s elite tier. Mods that alter the combat director’s elite tiers may cause this mod to behave unexpectedly.
 
 ## Patch notes
+
+v1.2.1
+* Fix elites not spawning at all with this mod enabled ([issue](https://github.com/arimah/PerfectedLoop/issues/1)). See [the pull request](https://github.com/arimah/PerfectedLoop/issues/2) for details.
 
 v1.2.0 - *Survivors of the Void*
 
