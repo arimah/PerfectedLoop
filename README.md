@@ -18,6 +18,9 @@ The mod looks for the elite tier that contains Malachite _and_ Celestine elites.
 
 ## Patch notes
 
+v1.2.2
+* Fix elites not spawning correctly with some mods. Technical detail: if `CombatDirector.Init` is called more than once (which it shouldn't be, but `EliteAPI` does whatever it feels like), then the mod correctly sets up the elite tier list now.
+
 v1.2.1
 * Fix elites not spawning at all with this mod enabled ([issue](https://github.com/arimah/PerfectedLoop/issues/1)). See [the pull request](https://github.com/arimah/PerfectedLoop/issues/2) for details.
 

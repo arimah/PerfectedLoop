@@ -1,6 +1,6 @@
 {
 	"name": "PerfectedLoop",
-	"version_number": "1.2.1",
+	"version_number": "1.2.2",
 	"website_url": "https://github.com/arimah/PerfectedLoop",
 	"description": "Makes Perfected Elites spawn after looping.",
 	"dependencies": [

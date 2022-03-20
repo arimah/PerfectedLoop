@@ -5,11 +5,12 @@ using BepInEx.Logging;
 using HarmonyLib;
 using RoR2;
 using R2API.Utils;
+using System.Collections.Generic;
 
 namespace Arimah
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.arimah.PerfectedLoop", "PerfectedLoop", "1.2.1")]
+    [BepInPlugin("com.arimah.PerfectedLoop", "PerfectedLoop", "1.2.2")]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
     public class PerfectedLoop : BaseUnityPlugin
     {
@@ -18,7 +19,7 @@ namespace Arimah
         /// </summary>
         private const int VanillaLoopEliteTier = 3;
 
-        private static bool hasRun = false;
+        private static bool needLateInit = false;
 
         private static ManualLogSource instanceLogger;
 
@@ -30,16 +31,8 @@ namespace Arimah
             new Harmony("com.arimah.PerfectedLoop").PatchAll(typeof(PerfectedLoop));
         }
 
-        [HarmonyPatch(typeof(CombatDirector), "ResetEliteType")]
-        [HarmonyPrefix]
-        public static void CombatDirector_ResetEliteType(CombatDirector.EliteTierDef[] ___eliteTiers)
+        private static void InitEliteTiers(CombatDirector.EliteTierDef[] eliteTiers)
         {
-            if (hasRun)
-            {
-                return;
-            }
-            hasRun = true;
-
             try
             {
                 var malachite = RoR2Content.Elites.Poison.eliteIndex;
@@ -47,7 +40,7 @@ namespace Arimah
 
                 // Find the elite tier that contains Poison (Malachite) and Haunted (Celestine).
                 // This tier is used after looping.
-                var loopEliteTier = ___eliteTiers.FirstOrDefault(tier =>
+                var loopEliteTier = eliteTiers.FirstOrDefault(tier =>
                     2 == tier.eliteTypes.Count(t =>
                         t != null && (
                             t.eliteIndex == malachite ||
@@ -56,20 +49,57 @@ namespace Arimah
                     )
                 );
 
+                if (loopEliteTier.eliteTypes.Contains(RoR2Content.Elites.Lunar))
+                {
+                    instanceLogger?.LogDebug("Loop elite tier already contains perfected elites; aborting");
+                    return;
+                }
+
                 if (loopEliteTier == null)
                 {
                     instanceLogger?.LogDebug("Loop elites not found through search; falling back to vanilla index");
-                    loopEliteTier = ___eliteTiers[VanillaLoopEliteTier];
+                    loopEliteTier = eliteTiers[VanillaLoopEliteTier];
                 }
 
                 loopEliteTier.eliteTypes = loopEliteTier.eliteTypes.Concat(new[] {
-                    RoR2Content.Elites.Lunar
+                    RoR2Content.Elites.Lunar,
                 }).ToArray();
                 instanceLogger?.LogMessage("Perfected elites should now appear after looping");
             }
             catch (Exception e)
             {
                 instanceLogger?.LogError(e);
+            }
+        }
+
+        [HarmonyPatch(typeof(CombatDirector), "Init")]
+        [HarmonyPostfix]
+        public static void CombatDirector_Init(CombatDirector.EliteTierDef[] ___eliteTiers)
+        {
+            // If CombatDirector.Init() is called too early - before content has loaded - then
+            // initialize the modified elite tier list in the first call to ResetEliteType.
+            if (
+                RoR2Content.Elites.Poison == null ||
+                RoR2Content.Elites.Haunted == null ||
+                RoR2Content.Elites.Lunar == null
+            )
+            {
+                needLateInit = true;
+            }
+            else
+            {
+                InitEliteTiers(___eliteTiers);
+            }
+        }
+
+        [HarmonyPatch(typeof(CombatDirector), "ResetEliteType")]
+        [HarmonyPrefix]
+        public static void CombatDirector_ResetEliteType(CombatDirector.EliteTierDef[] ___eliteTiers)
+        {
+            if (needLateInit)
+            {
+                needLateInit = false;
+                InitEliteTiers(___eliteTiers);
             }
         }
     }
