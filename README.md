@@ -40,7 +40,7 @@ v1.0.0
 
 ## Support
 
-If the mod fails to work, you can [open a GitHub issue][issue]. You can also contact me on Discord at Arimah#0001. I am _not_ in any Risk of Rain modding community.
+If the mod fails to work, you can [open a GitHub issue][issue]. You can also contact me on Discord at `Arimah#0001`. I am _not_ in any Risk of Rain modding community.
 
 ## Installation
 
